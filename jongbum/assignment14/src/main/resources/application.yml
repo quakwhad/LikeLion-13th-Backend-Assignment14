@@ -1,0 +1,36 @@
+server:
+  port: 8080
+  forward-headers-strategy: framework
+
+spring:
+  profiles:
+    active: prod
+
+  datasource:
+    url: ${spring.datasource.url}
+    username: ${spring.datasource.username}
+    password: ${spring.datasource.password}
+    driver-class-name: ${spring.datasource.driver-class-name}
+
+  jpa:
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: false
+        use_sql_comments: true
+        show_sql: true
+    open-in-view: false
+
+culture:
+  api:
+    base-url: https://apis.data.go.kr/B553457/cultureinfo
+    auth-key: ${CULTURE_API_KEY}
+
+weather:
+  api:
+    base-url: https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0
+    auth-key: ${WEATHER_API_KEY}
