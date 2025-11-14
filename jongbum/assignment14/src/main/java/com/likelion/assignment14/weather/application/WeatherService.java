@@ -1,5 +1,6 @@
 package com.likelion.assignment14.weather.application;
 
+import com.likelion.assignment14.weather.api.dto.response.WeatherApiResponseDto;
 import com.likelion.assignment14.weather.client.WeatherApiClient;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,5 +16,9 @@ public class WeatherService {
 
     public String getWeatherEventsRaw(int page, int size, String bateDate, String baseTime, int nx, int ny) {
         return weatherApiClient.getWeatherEventsAsString(page, size, bateDate, baseTime, nx, ny);
+    }
+
+    public WeatherApiResponseDto getWeatherEvents(int page, int size, String bateDate, String baseTime, int nx, int ny) {
+        return weatherApiClient.getWeatherEvents(page, size, bateDate, baseTime, nx, ny);
     }
 }

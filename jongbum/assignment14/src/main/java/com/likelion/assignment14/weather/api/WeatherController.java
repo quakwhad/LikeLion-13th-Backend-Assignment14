@@ -1,5 +1,7 @@
 package com.likelion.assignment14.weather.api;
 
+import com.likelion.assignment14.global.code.dto.ApiResponse;
+import com.likelion.assignment14.weather.api.dto.response.WeatherApiResponseDto;
 import com.likelion.assignment14.weather.application.WeatherService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -25,5 +27,18 @@ public class WeatherController {
 
         String response = weatherService.getWeatherEventsRaw(page, size, baseDate, baseTime, nx, ny);
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("")
+    public ApiResponse<WeatherApiResponseDto> getWeather(
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "1") int size,
+            @RequestParam(defaultValue = "20251113") String baseDate,
+            @RequestParam(defaultValue = "0500") String baseTime,
+            @RequestParam(defaultValue = "55") int nx,
+            @RequestParam(defaultValue = "127") int ny) {
+
+        WeatherApiResponseDto response = weatherService.getWeatherEvents(page, size, baseDate, baseTime, nx, ny);
+        return ApiResponse.onSuccess(response);
     }
 }

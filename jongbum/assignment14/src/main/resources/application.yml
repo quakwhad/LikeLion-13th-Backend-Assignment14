@@ -25,11 +25,6 @@ spring:
         show_sql: true
     open-in-view: false
 
-culture:
-  api:
-    base-url: https://apis.data.go.kr/B553457/cultureinfo
-    auth-key: ${CULTURE_API_KEY}
-
 weather:
   api:
     base-url: https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0

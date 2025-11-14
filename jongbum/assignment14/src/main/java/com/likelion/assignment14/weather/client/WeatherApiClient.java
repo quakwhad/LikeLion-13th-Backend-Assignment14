@@ -2,6 +2,7 @@ package com.likelion.assignment14.weather.client;
 
 import com.likelion.assignment14.global.code.status.ErrorStatus;
 import com.likelion.assignment14.global.exception.GeneralException;
+import com.likelion.assignment14.weather.api.dto.response.WeatherApiResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -33,9 +34,19 @@ public class WeatherApiClient {
             return restTemplate.getForObject(new URI(url), String.class);
         } catch (Exception e) {
             log.error("Weather API 호출 실패 (String)", e);
-            throw new GeneralException(ErrorStatus.CULTURE_API_ERROR);
+            throw new GeneralException(ErrorStatus.WEATHER_API_ERROR);
         }
     }
 
-    // return restTemplate.getForObject(new URI(url), CultureListApiResponse.class);
+    public WeatherApiResponseDto getWeatherEvents(int pageNo, int numOfRows, String baseDate, String baseTime, int nx, int ny) {
+        String encodedKey = URLEncoder.encode(authKey, StandardCharsets.UTF_8);
+
+        String url = String.format("%s/getVilageFcst?serviceKey=%s&pageNo=%d&numOfRows=%d&dataType=XML&base_date=%s&base_time=%s&nx=%d&ny=%d", baseUrl, encodedKey, pageNo, numOfRows, baseDate, baseTime, nx, ny);
+        try {
+            return restTemplate.getForObject(new URI(url), WeatherApiResponseDto.class);
+        } catch (Exception e) {
+            log.error("Weather API 호출 실패 (DTO)", e);
+            throw new GeneralException(ErrorStatus.WEATHER_API_ERROR);
+        }
+    }
 }

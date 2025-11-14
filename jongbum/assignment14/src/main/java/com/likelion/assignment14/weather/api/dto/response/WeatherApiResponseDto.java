@@ -1,10 +1,16 @@
 package com.likelion.assignment14.weather.api.dto.response;
 
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper; // 이 임포트 추가
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty; // 이 임포트 추가
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+@JacksonXmlRootElement(localName = "response")
+@Getter
+@NoArgsConstructor
 public class WeatherApiResponseDto {
     // 응답 헤더
     private Header header;
@@ -16,10 +22,7 @@ public class WeatherApiResponseDto {
     @Getter
     @NoArgsConstructor
     public static class Header {
-        // 결과 코드
         private String resultCode;
-
-        // 결과 메시지
         private String resultMsg;
     }
 
@@ -27,28 +30,27 @@ public class WeatherApiResponseDto {
     @Getter
     @NoArgsConstructor
     public static class Body {
-        // 전체 건수
-        private Integer totalCount;
+        private String dataType;
 
-        // 페이지 번호
-        private Integer pageNo;
+        private Items items;
 
-        // 페이지당 행 수
         private Integer numOfRows;
 
-        // 문화행사 목록
-        private Items items;
+        private Integer pageNo;
+
+        private Integer totalCount;
     }
 
-    // 문화행사 아이템 목록
+    // 날씨 아이템 목록
     @Getter
     @NoArgsConstructor
     public static class Items {
-        // 문화행사 배열
+        @JacksonXmlElementWrapper(useWrapping = false)
+        @JacksonXmlProperty(localName = "item")
         private List<WeatherListItem> item;
     }
 
-    // 문화행사 리스트 정보
+    // 날씨 리스트 정보
     @Getter
     @NoArgsConstructor
     public static class WeatherListItem {
